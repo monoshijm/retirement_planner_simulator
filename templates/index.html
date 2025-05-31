@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Retirement Planner</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            padding: 35px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            box-sizing: border-box;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.2em;
+        }
+        h2 {
+            font-size: 1.6em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 35px;
+        }
+        h3 {
+            font-size: 1.3em;
+            color: #34495e;
+        }
+        .intro-text {
+            background-color: #e9f7ef;
+            border-left: 5px solid #28a745;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 6px;
+            color: #218838;
+        }
+        .intro-text p {
+            margin: 5px 0;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px 30px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 0; /* Adjusted for grid gap */
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            font-size: 0.95em;
+        }
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.2s;
+        }
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        button {
+            grid-column: 1 / 3;
+            background-color: #007bff;
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.2);
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .results {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #e2e6ea;
+            margin-top: 40px;
+        }
+        .results p {
+            margin-bottom: 12px;
+            font-size: 1.05em;
+            color: #495057;
+        }
+        .results strong {
+            color: #2c3e50;
+        }
+        .error {
+            color: #dc3545;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        ul {
+            list-style-type: none; /* Remove default bullet */
+            padding-left: 0;
+            margin-top: 15px;
+        }
+        ul li {
+            background-color: #e2e8f0;
+            margin-bottom: 8px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            font-size: 0.95em;
+        }
+        ul li::before {
+            content: '•'; /* Custom bullet */
+            color: #007bff;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #dee2e6;
+        }
+        .summary-status {
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        .summary-status.surplus {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .summary-status.shortfall {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Personalized Retirement Planner & Investment Simulator</h1>
+
+        <div class="intro-text">
+            <p><strong>Welcome!</strong> This tool helps you plan your financial future by providing data-driven projections for your retirement.</p>
+            <p>Input your current financial situation and retirement goals, and the simulator will:</p>
+            <ul>
+                <li>Project your savings growth.</li>
+                <li>Estimate the required corpus for your desired retirement income.</li>
+                <li>Run **Monte Carlo simulations** to show the probable range of your investment outcomes.</li>
+                <li>Suggest a general investment strategy based on your time horizon.</li>
+            </ul>
+        </div>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form action="/" method="post">
+            <h2>Your Current Situation & Goals</h2>
+            <div class="form-group">
+                <label for="current_age">Current Age (Years):</label>
+                <input type="number" id="current_age" name="current_age" value="{{ '25' if current_age is none else current_age }}" required min="1" max="99">
+            </div>
+            <div class="form-group">
+                <label for="retirement_age">Desired Retirement Age (Years):</label>
+                <input type="number" id="retirement_age" name="retirement_age" value="{{ '60' if retirement_age is none else retirement_age }}" required min="1" max="99">
+            </div>
+            <div class="form-group">
+                <label for="life_expectancy">Expected Life Expectancy (Years):</label>
+                <input type="number" id="life_expectancy" name="life_expectancy" value="{{ '85' if life_expectancy is none else life_expectancy }}" required min="1" max="120">
+            </div>
+            <div class="form-group">
+                <label for="current_savings">Current Savings (INR):</label>
+                <input type="number" id="current_savings" name="current_savings" value="{{ '100000' if current_savings is none else current_savings }}" required min="0">
+            </div>
+            <div class="form-group">
+                <label for="monthly_contribution">Monthly Contribution (INR):</label>
+                <input type="number" id="monthly_contribution" name="monthly_contribution" value="{{ '10000' if monthly_contribution is none else monthly_contribution }}" required min="0">
+            </div>
+            <div class="form-group">
+                <label for="desired_annual_income_today">Desired Annual Income at Retirement (Today's INR):</label>
+                <input type="number" id="desired_annual_income_today" name="desired_annual_income_today" value="{{ '500000' if desired_annual_income_today is none else desired_annual_income_today }}" required min="0">
+            </div>
+
+            <h2>Investment Assumptions</h2>
+            <div class="form-group">
+                <label for="avg_annual_return">Avg. Annual Investment Return (%) (Pre-Retirement):</label>
+                <input type="number" step="0.1" id="avg_annual_return" name="avg_annual_return" value="{{ '10' if avg_annual_return is none else avg_annual_return }}" required min="0" max="100">
+            </div>
+            <div class="form-group">
+                <label for="std_dev_annual_return">Annual Return Std. Dev. (%) (Volatility):</label>
+                <input type="number" step="0.1" id="std_dev_annual_return" name="std_dev_annual_return" value="{{ '15' if std_dev_annual_return is none else std_dev_annual_return }}" required min="0" max="100">
+            </div>
+            <div class="form-group">
+                <label for="post_retirement_return_rate">Avg. Annual Post-Retirement Return (%) :</label>
+                <input type="number" step="0.1" id="post_retirement_return_rate" name="post_retirement_return_rate" value="{{ '7' if post_retirement_return_rate is none else post_retirement_return_rate }}" required min="0" max="100">
+            </div>
+            <div class="form-group">
+                <label for="inflation_rate">Avg. Annual Inflation Rate (%):</label>
+                <input type="number" step="0.1" id="inflation_rate" name="inflation_rate" value="{{ '5' if inflation_rate is none else inflation_rate }}" required min="0" max="100">
+            </div>
+
+            <button type="submit">Calculate My Retirement Plan</button>
+        </form>
+
+        {% if results %}
+            <div class="results">
+                <h2>Your Retirement Plan Results:</h2>
+                <h3>Summary:</h3>
+                <p><strong>Years to Retirement:</strong> {{ results.years_to_retirement }}</p>
+                <p><strong>Years in Retirement:</strong> {{ results.years_in_retirement }}</p>
+                <p><strong>Desired Annual Income at Retirement (Inflation-Adjusted):</strong> INR {{ "{:,.2f}".format(results.desired_income_at_retirement) }}</p>
+                <p><strong>Estimated Required Corpus at Retirement:</strong> INR {{ "{:,.2f}".format(results.required_corpus) }}</p>
+
+                <h3>Projected Savings Growth:</h3>
+                <p>Your projected savings balance year-by-year (without volatility consideration):</p>
+                <ul>
+                    {% for year, balance in results.projected_savings_by_year %}
+                        <li>Year {{ year }}: INR {{ "{:,.2f}".format(balance) }}</li>
+                    {% endfor %}
+                </ul>
+                <p><strong>Your Projected Savings at Retirement (Deterministic):</strong> INR {{ "{:,.2f}".format(results.projected_savings_at_retirement) }}</p>
+
+                <div class="summary-status {{ results.savings_vs_corpus }}">
+                    {% if results.savings_vs_corpus == 'surplus' %}
+                        <p><strong>Congratulations! You are projected to have a SURPLUS of INR {{ "{:,.2f}".format(results.net_corpus_difference) }} at retirement.</strong></p>
+                    {% elif results.savings_vs_corpus == 'shortfall' %}
+                        <p><strong>Warning: You are projected to have a SHORTFALL of INR {{ "{:,.2f}".format(results.net_corpus_difference) }} at retirement. Consider increasing contributions or adjusting goals.</strong></p>
+                    {% else %}
+                        <p>Your projected savings are close to your required corpus.</p>
+                    {% endif %}
+                </div>
+
+
+                <h3>Monte Carlo Simulation Results (1,000 runs):</h3>
+                <p>Based on market volatility and 1,000 simulations, here's the probable range of your retirement corpus:</p>
+                <ul>
+                    <li>**Worst Case (0.5th Percentile):** INR {{ "{:,.2f}".format(results.monte_carlo_min) }}</li>
+                    <li>**Average Projected Corpus:** INR {{ "{:,.2f}".format(results.monte_carlo_avg) }}</li>
+                    <li>**Median Projected Corpus (50th Percentile):** INR {{ "{:,.2f}".format(results.monte_carlo_median) }}</li>
+                    <li>**10th Percentile Corpus:** INR {{ "{:,.2f}".format(results.monte_carlo_10th_percentile) }} <br><span class="note">(There's a 10% chance your corpus could be below this amount)</span></li>
+                    <li>**90th Percentile Corpus:** INR {{ "{:,.2f}".format(results.monte_carlo_90th_percentile) }} <br><span class="note">(There's a 10% chance your corpus could be above this amount)</span></li>
+                </ul>
+
+
+                <h3>Investment Strategy Recommendation:</h3>
+                <p>Based on your time horizon to retirement, here's a general asset allocation guideline:</p>
+                <p><strong>Equity Allocation:</strong> {{ results.asset_allocation.equity }}</p>
+                <p><strong>Debt/Fixed Income Allocation:</strong> {{ results.asset_allocation.debt }}</p>
+                <p class="note"><em>Note: {{ results.asset_allocation.note }} This is a general guideline; consult a financial advisor for personalized advice.</em></p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

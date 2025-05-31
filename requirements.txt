@@ -1,0 +1,5 @@
+# requirements.txt
+Flask
+numpy
+pandas # While not strictly used in current version, good for financial data handling later
+scipy
